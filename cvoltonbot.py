@@ -9,6 +9,7 @@ import threading
 import tweepy
 import re
 
+#test commit
 file = open('/home/pi/Desktop/botstuff/twitter/CONSUMER_KEY.txt', 'r')
 CONSUMER_KEY = file.read() #note: this twitter integration has nothing to do with the gdps, I just use CvoltonBot for other stuff too
 file = open('/home/pi/Desktop/botstuff/twitter/CONSUMER_SECRET.txt', 'r')
