@@ -1,0 +1,12 @@
+**Download:** http://www.mediafire.com/?t9wbs7uhmqa9g
+**Homepage:** https://pi.michaelbrabec.cz:9020/a/accounts/accountManagement.php
+**Level Reupload:** https://pi.michaelbrabec.cz:9020/a/tools/levelReupload.php
+**Add a MP3:** https://pi.michaelbrabec.cz:9020/a/tools/songAdd.php
+**Fix Creator Points:** https://pi.michaelbrabec.cz:9020/a/tools/cron/cron.php
+**List of Custom Songs:** https://pi.michaelbrabec.cz:9020/a/tools/stats/songList.php
+**List of Mod Actions:** https://pi.michaelbrabec.cz:9020/a/tools/stats/modActions.php
+**List of Map Packs and Gauntlets:** https://pi.michaelbrabec.cz:9020/a/tools/stats/packTable.php
+**Change Password:** https://pi.michaelbrabec.cz:9020/a/accounts/changePassword.php
+**Change Username:** https://pi.michaelbrabec.cz:9020/a/accounts/changeUsername.php
+**Bot Invite:** https://discordapp.com/oauth2/authorize?&client_id=271743077461393409&scope=bot&permissions=3072
+**Server Invite:** https://discord.gg/EHYnxVE

@@ -1,0 +1,20 @@
+CvoltonBot Commands List:
+```!isup - tells you if the bot is online
+!level <name or id> - shows info about a level
+!links - shows relevant links to CvoltonGDPS
+!download - shows download links to CvoltonGDPS
+!songlist <page> - list of custom songs
+!searchsong <name or id> - searches for a song
+!whorated <level id> - shows who rated a level
+!player <name> - shows info about a player
+!top <type> <page> - leaderboards
+!mods - mod actions leaderboards
+!time - shows current date & time
+!server - shows server status
+!songreup <link> - reuploads a song onto the GDPS```
+GDPS Integration Commands:
+```!linkacc <name> - links your GDPS and Discord accounts
+!unlinkacc - unlinks your GDPS account/cancels link request
+!transferperms - transfers your roles from Discord to the GDPS
+!resetpassword - resets your GDPS password```
+<:cest_nakupu:305715326010654720><:thot:347998980564582400><:Kekes:274845534873714690>
