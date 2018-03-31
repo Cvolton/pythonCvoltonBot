@@ -5,6 +5,8 @@ import datetime
 import requests
 import youtube_dl
 import subprocess
+import datetime
+from datetime import timezone
 import threading
 import tweepy
 import re
@@ -28,6 +30,19 @@ file = open('/home/pi/Desktop/botstuff/twitter/twitter_channel.txt', 'r')
 twitterChannel = file.read()
 file = open('/home/pi/Desktop/botstuff/gdpssecret.txt', 'r')
 gdpssecret = file.read()
+
+def transferpermsMultithread(members,members2):
+    for member in members:
+        transferperms(member)
+    
+def transferperms(person):
+    messagething = ""
+    for i, val in enumerate(person.roles):
+        messagething += val.id + ","
+    messagething = messagething[:-1]
+    print(messagething)
+    print("http://127.0.0.1:9010/a/tools/bot/discordLinkTransferRoles.php?roles="+messagething+"&discordID="+str(person.id)+"&secret="+gdpssecret)
+    return urllib.request.urlopen("http://127.0.0.1:9010/a/tools/bot/discordLinkTransferRoles.php?roles="+messagething+"&discordID="+str(person.id)+"&secret="+gdpssecret).read().decode('UTF-8')
 
 def songUpload(song,message,client):
     msg = client.send_message(message.channel, 'Downloading song, please wait')
@@ -90,6 +105,10 @@ async def on_message(message):
         level = urllib.parse.quote_plus(level)
         levelinfo = urllib.request.urlopen("http://127.0.0.1:9010/a/tools/bot/levelSearchBot.php?str="+level).read().decode('UTF-8')
         await client.send_message(message.channel, levelinfo)
+    elif message.content.startswith('!userlevels'):
+        userlevels = message.content.replace("!userlevels ","")
+        levelinfo = requests.post("http://127.0.0.1:9010/a/tools/bot/userLevelSearchBot.php", data={'str': userlevels}, headers={'User-Agent': "CvoltonGDPS"})
+        await client.send_message(message.channel, levelinfo.text)
     elif message.content.startswith('!links'):
         file = open('/home/pi/Desktop/botstuff/links.txt', 'r')
         await client.send_message(message.channel, file.read())
@@ -201,11 +220,15 @@ async def on_message(message):
                 print(personid)
                 person = message.server.get_member(personid)
             await client.send_message(message.channel, "Transferring roles")
-            messagething = ""
-            for i, val in enumerate(person.roles):
-                messagething += val.id + ","
-            messagething = messagething[:-1]
-            print(messagething)
-            await client.send_message(message.channel, urllib.request.urlopen("http://127.0.0.1:9010/a/tools/bot/discordLinkTransferRoles.php?roles="+messagething+"&discordID="+str(person.id)+"&secret="+gdpssecret).read().decode('UTF-8'))
+            await client.send_message(message.channel, transferperms(person))
+        elif message.content.startswith('!listmembers'):
+            await client.send_message(message.channel, "bot gonna lag now lol prenk")
+            timebeforelag = datetime.datetime.now(tz=timezone.utc).timestamp()
+            TransferThread = threading.Thread(target=transferpermsMultithread,args=(message.server.members,message.server.members))
+            TransferThread.start()
+            timeafterlag = datetime.datetime.now(tz=timezone.utc).timestamp()
+            finaltime = str(timeafterlag - timebeforelag)
+            await client.send_message(message.channel, "done, " + finaltime + "s")
+
 file = open('/home/pi/Desktop/botstuff/token.txt', 'r')
 client.run(file.read())
