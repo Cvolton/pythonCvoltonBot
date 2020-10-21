@@ -38,14 +38,13 @@ def transferpermsMultithread(members,members2):
 def transferperms(person):
     messagething = ""
     for i, val in enumerate(person.roles):
-        messagething += val.id + ","
+        messagething += str(val.id) + ","
     messagething = messagething[:-1]
     print(messagething)
     print("http://127.0.0.1:9010/a/tools/bot/discordLinkTransferRoles.php?roles="+messagething+"&discordID="+str(person.id)+"&secret="+gdpssecret)
     return urllib.request.urlopen("http://127.0.0.1:9010/a/tools/bot/discordLinkTransferRoles.php?roles="+messagething+"&discordID="+str(person.id)+"&secret="+gdpssecret).read().decode('UTF-8')
 
 def songUpload(song,message,client):
-    msg = message.channel.send('Downloading song, please wait')
     options = {
         'format': 'bestaudio/best', # choice of quality
         'extractaudio' : True,      # only keep the audio
@@ -56,7 +55,6 @@ def songUpload(song,message,client):
     with youtube_dl.YoutubeDL(options) as ydl:
         ydl.download([song])
         r = ydl.extract_info(song, download=False)
-    msg.edit(content='Reuploading ' + r['id'] + " - " + r['title'] + " by " + r['uploader'])
     subprocess.run(['avconv','-i','/var/www/songcdn/temp/'+r['id'],'-n','-c:a','libmp3lame','-ac','2','-b:a','190k','/var/www/songcdn/'+r['id']+".mp3"])
     link = "http://songcdn.michaelbrabec.cz:9010/"+r['id']
     link = urllib.parse.quote_plus(link)
@@ -222,13 +220,13 @@ async def on_message(message):
                 non_decimal = re.compile(r'[^\d.]+')
                 personid = non_decimal.sub('', personid)
                 print(personid)
-                person = message.server.get_member(personid)
+                person = message.guild.get_member(personid)
             await message.channel.send("Transferring roles")
             await message.channel.send(transferperms(person))
         elif message.content.startswith('!listmembers'):
             await message.channel.send("bot gonna lag now lol prenk")
             timebeforelag = datetime.datetime.now(tz=timezone.utc).timestamp()
-            TransferThread = threading.Thread(target=transferpermsMultithread,args=(message.server.members,message.server.members))
+            TransferThread = threading.Thread(target=transferpermsMultithread,args=(message.guild.members,message.guild.members))
             TransferThread.start()
             timeafterlag = datetime.datetime.now(tz=timezone.utc).timestamp()
             finaltime = str(timeafterlag - timebeforelag)
